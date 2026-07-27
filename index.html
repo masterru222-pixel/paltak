@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>paltak — Owner of Dead Seller | Discord Developer Since 2016</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#09090b;--bg2:#120a0a;--bg3:#1a0e0e;
+      --surface:#130b0b;--border:#2b1818;
+      --text:#f0e8e8;--text2:#a08080;
+      --accent:#ed4245;--accent2:#c0392b;--accent3:#e74c3c;
+      --accent-glow:rgba(237,66,69,0.2);
+      --green:#57f287;--yellow:#fee75c;--red:#ed4245;
+      --orange:#f47b20;--purple:#8b5cf6;
+      --online:#57f287;--idle:#fee75c;--dnd:#ed4245;--offline:#80848e;
+      --radius:16px;--radius-sm:10px
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;background:var(--bg);
+      color:var(--text);line-height:1.7;overflow-x:hidden
+    }
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+    #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .particle{position:absolute;border-radius:50%;opacity:.12;animation:float linear infinite}
+    @keyframes float{
+      0%{transform:translateY(100vh)scale(0);opacity:0}
+      10%{opacity:.2}90%{opacity:.1}
+      100%{transform:translateY(-10vh)scale(1);opacity:0}
+    }
+
+    #cursor-glow{
+      position:fixed;width:400px;height:400px;border-radius:50%;
+      background:radial-gradient(circle,rgba(237,66,69,.08)0%,transparent 70%);
+      pointer-events:none;z-index:0;transform:translate(-50%,-50%);
+      transition:left .1s ease,top .1s ease
+    }
+
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:14px 36px;background:rgba(9,9,11,.85);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between
+    }
+    nav .logo{
+      font-size:1.2rem;font-weight:800;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      letter-spacing:-.5px;display:flex;align-items:center;gap:12px
+    }
+    nav .logo span{color:var(--text);-webkit-text-fill-color:var(--text)}
+    nav .nav-links{display:flex;gap:24px;align-items:center}
+    nav .nav-links a{
+      color:var(--text2);text-decoration:none;font-size:.85rem;
+      font-weight:500;transition:color .2s;position:relative
+    }
+    nav .nav-links a::after{
+      content:'';position:absolute;bottom:-4px;left:0;
+      width:0;height:2px;background:var(--accent);transition:width .3s
+    }
+    nav .nav-links a:hover{color:var(--text)}
+    nav .nav-links a:hover::after{width:100%}
+    .nav-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:8px}
+    .nav-toggle span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+
+    section{position:relative;z-index:1;padding:100px 40px;max-width:1200px;margin:0 auto}
+    .section-label{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.75rem;font-weight:600;text-transform:uppercase;
+      letter-spacing:3px;color:var(--accent);margin-bottom:12px
+    }
+    .section-label::before{content:'';width:20px;height:1px;background:var(--accent)}
+    .section-title{
+      font-size:clamp(1.8rem,4vw,3rem);font-weight:800;
+      letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px
+    }
+    .section-title .gradient{
+      background:linear-gradient(135deg,var(--accent),var(--accent3),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent
+    }
+    .section-sub{color:var(--text2);font-size:1rem;max-width:600px;line-height:1.8}
+
+    /* ═══════ HERO — DISCORD PROFILE FIRST ═══════ */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      padding:100px 40px 60px;text-align:center;position:relative
+    }
+    #hero .hero-inner{max-width:700px;width:100%}
+    #hero .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(237,66,69,.1);border:1px solid rgba(237,66,69,.2);
+      padding:6px 16px;border-radius:100px;
+      font-size:.75rem;font-weight:500;color:var(--accent);margin-bottom:24px
+    }
+    #hero .profile-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:36px 36px 28px;
+      text-align:center;position:relative;overflow:hidden;
+      transition:border-color .3s
+    }
+    #hero .profile-card:hover{border-color:rgba(237,66,69,.3)}
+    #hero .profile-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;
+      height:3px;background:linear-gradient(90deg,var(--accent),var(--accent3));
+      border-radius:var(--radius) var(--radius) 0 0
+    }
+    #hero .profile-card .top-row{
+      display:flex;align-items:center;gap:24px;text-align:left;
+      margin-bottom:20px;flex-wrap:wrap;justify-content:center
+    }
+    #hero .profile-card .avatar-section{position:relative;flex-shrink:0}
+    #hero .profile-card .avatar-section img{
+      width:100px;height:100px;border-radius:50%;
+      object-fit:cover;border:3px solid var(--border);
+      transition:border-color .3s;display:block
+    }
+    #hero .profile-card .avatar-section .live-ring{
+      position:absolute;bottom:2px;right:2px;
+      width:24px;height:24px;border-radius:50%;
+      border:3px solid var(--surface);transition:background .3s
+    }
+    #hero .profile-card .avatar-section .live-ring.online{background:var(--online);box-shadow:0 0 12px var(--online)}
+    #hero .profile-card .avatar-section .live-ring.idle{background:var(--idle);box-shadow:0 0 12px var(--idle)}
+    #hero .profile-card .avatar-section .live-ring.dnd{background:var(--dnd);box-shadow:0 0 12px var(--dnd)}
+    #hero .profile-card .avatar-section .live-ring.offline{background:var(--offline)}
+    #hero .profile-card .name-section{flex:1;min-width:200px}
+    #hero .profile-card .name-section h1{
+      font-size:2.2rem;font-weight:900;letter-spacing:-1px;line-height:1.1
+    }
+    #hero .profile-card .name-section h1 .highlight{
+      background:linear-gradient(135deg,var(--accent),var(--accent3));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent
+    }
+    #hero .profile-card .name-section .username-tag{
+      color:var(--text2);font-size:.9rem;font-weight:400
+    }
+    #hero .profile-card .name-section .status-line{
+      display:flex;align-items:center;gap:8px;margin-top:6px
+    }
+    #hero .profile-card .name-section .status-line .sd{
+      width:10px;height:10px;border-radius:50%;transition:background .3s
+    }
+    #hero .profile-card .name-section .status-line .sd.online{background:var(--online)}
+    #hero .profile-card .name-section .status-line .sd.idle{background:var(--idle)}
+    #hero .profile-card .name-section .status-line .sd.dnd{background:var(--dnd)}
+    #hero .profile-card .name-section .status-line .sd.offline{background:var(--offline)}
+    #hero .profile-card .name-section .status-line .sl{
+      font-weight:600;font-size:.9rem;text-transform:capitalize;transition:color .3s
+    }
+    #hero .profile-card .activity-row{
+      display:flex;align-items:center;gap:12px;
+      padding:14px 18px;background:var(--bg2);
+      border:1px solid var(--border);border-radius:var(--radius-sm);
+      margin-bottom:20px;text-align:left
+    }
+    #hero .profile-card .activity-row .ai{
+      width:44px;height:44px;border-radius:8px;
+      background:var(--surface);display:flex;
+      align-items:center;justify-content:center;
+      font-size:1.2rem;flex-shrink:0
+    }
+    #hero .profile-card .activity-row .ai img{width:100%;height:100%;border-radius:8px;object-fit:cover}
+    #hero .profile-card .activity-row .act-info .act-name{font-weight:600;font-size:.92rem}
+    #hero .profile-card .activity-row .act-info .act-detail{color:var(--text2);font-size:.82rem}
+    #hero .profile-card .activity-row .act-info .act-time{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2)}
+    #hero .profile-card .no-activity{
+      display:flex;align-items:center;gap:8px;
+      color:var(--text2);font-size:.88rem;margin-bottom:18px;
+      justify-content:center
+    }
+    #hero .profile-card .badge-row{
+      display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+      margin-bottom:14px
+    }
+    #hero .profile-card .badge-row .badge-item{
+      display:flex;align-items:center;gap:5px;
+      padding:4px 12px;border-radius:100px;
+      background:rgba(237,66,69,.06);border:1px solid rgba(237,66,69,.12);
+      font-size:.72rem;font-weight:500;color:var(--accent)
+    }
+    #hero .profile-card .badge-row .badge-item i{font-size:.65rem}
+    #hero .profile-card .btn-row{
+      display:flex;gap:12px;justify-content:center;flex-wrap:wrap
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:12px 28px;border-radius:100px;font-weight:600;
+      font-size:.9rem;text-decoration:none;transition:all .3s;
+      cursor:pointer;border:none;font-family:inherit
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;box-shadow:0 4px 20px var(--accent-glow)
+    }
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 36px var(--accent-glow)}
+    .btn-outline{
+      background:transparent;color:var(--text);border:1px solid var(--border)
+    }
+    .btn-outline:hover{border-color:var(--accent);background:rgba(237,66,69,.06);transform:translateY(-3px)}
+    .btn-discord{background:#5865f2;color:#fff;box-shadow:0 4px 20px rgba(88,101,242,.3)}
+    .btn-discord:hover{transform:translateY(-3px);box-shadow:0 8px 36px rgba(88,101,242,.4)}
+    #hero .scroll-indicator{
+      position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      color:var(--text2);font-size:.7rem;letter-spacing:2px;
+      text-transform:uppercase;animation:bob 2s ease infinite
+    }
+    #hero .scroll-indicator .mouse{
+      width:20px;height:32px;border:2px solid var(--text2);
+      border-radius:10px;position:relative
+    }
+    #hero .scroll-indicator .mouse::after{
+      content:'';position:absolute;top:5px;left:50%;
+      transform:translateX(-50%);width:3px;height:7px;
+      background:var(--accent);border-radius:2px;
+      animation:scrollWheel 2s ease infinite
+    }
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+    @keyframes scrollWheel{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(8px)}}
+
+    /* ═══════ SERVER ═══════ */
+    #server{
+      background:linear-gradient(180deg,transparent,rgba(237,66,69,.02),transparent);
+      padding:80px 40px
+    }
+    #server .server-wrap{
+      display:grid;grid-template-columns:1fr 1fr;gap:50px;
+      align-items:center;max-width:1200px;margin:0 auto
+    }
+    #server .server-info p{color:var(--text2);margin-bottom:16px;font-size:1rem}
+    #server .server-features{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 24px
+    }
+    #server .server-features .feat{
+      display:flex;align-items:center;gap:8px;padding:9px 14px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius-sm);font-size:.85rem;transition:all .3s
+    }
+    #server .server-features .feat:hover{border-color:var(--accent);background:rgba(237,66,69,.06)}
+    #server .server-features .feat i{color:var(--accent);width:16px}
+    #server .server-visual{display:flex;flex-direction:column;align-items:center;gap:18px}
+    #server .server-visual .server-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:32px;text-align:center;
+      width:100%;transition:all .3s
+    }
+    #server .server-visual .server-card:hover{
+      border-color:var(--accent);transform:translateY(-6px);
+      box-shadow:0 12px 48px rgba(237,66,69,.1)
+    }
+    #server .server-visual .server-card .s-icon{font-size:3rem;margin-bottom:10px}
+    #server .server-visual .server-card h3{font-size:1.5rem;margin-bottom:3px}
+    #server .server-visual .server-card .owner-badge{
+      display:inline-flex;align-items:center;gap:5px;
+      background:rgba(237,66,69,.1);border:1px solid rgba(237,66,69,.18);
+      padding:3px 12px;border-radius:100px;font-size:.78rem;color:var(--accent);margin:6px 0 10px
+    }
+    #server .server-visual .server-card .member-count{
+      display:flex;justify-content:center;gap:24px;margin:10px 0 14px
+    }
+    #server .server-visual .server-card .member-count span{font-size:.88rem;color:var(--text2)}
+    #server .server-visual .server-card .member-count span strong{color:var(--text);font-size:1.05rem}
+
+    /* ═══════ ABOUT ═══════ */
+    #about{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+    #about .about-text p{color:var(--text2);margin-bottom:16px;font-size:1rem}
+    #about .about-text .tech-stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    #about .about-text .tech-stack span{
+      padding:5px 14px;border-radius:100px;background:var(--surface);
+      border:1px solid var(--border);font-size:.78rem;font-weight:500;
+      color:var(--text2);transition:all .3s
+    }
+    #about .about-text .tech-stack span:hover{border-color:var(--accent);color:var(--accent)}
+    #about .about-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    #about .about-visual .card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:20px;text-align:center;transition:all .3s
+    }
+    #about .about-visual .card:hover{
+      border-color:var(--accent);transform:translateY(-4px);
+      box-shadow:0 8px 32px rgba(0,0,0,.3)
+    }
+    #about .about-visual .card .icon{font-size:1.8rem;margin-bottom:8px}
+    #about .about-visual .card h4{font-size:.92rem;margin-bottom:3px}
+    #about .about-visual .card p{font-size:.78rem;color:var(--text2)}
+
+    /* ═══════ TIMELINE ═══════ */
+    #journey .section-sub{margin-bottom:44px}
+    .timeline{position:relative;padding-left:36px}
+    .timeline::before{
+      content:'';position:absolute;left:14px;top:0;bottom:0;
+      width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent3),var(--accent2),transparent)
+    }
+    .timeline-item{
+      position:relative;margin-bottom:40px;
+      opacity:0;transform:translateX(-30px);transition:all .8s ease
+    }
+    .timeline-item.visible{opacity:1;transform:translateX(0)}
+    .timeline-item .dot{
+      position:absolute;left:-30px;top:5px;width:12px;height:12px;
+      border-radius:50%;background:var(--accent);
+      border:3px solid var(--bg);box-shadow:0 0 0 2px var(--accent)
+    }
+    .timeline-item .dot.green{background:var(--green);box-shadow:0 0 0 2px var(--green)}
+    .timeline-item .dot.yellow{background:var(--yellow);box-shadow:0 0 0 2px var(--yellow)}
+    .timeline-item .dot.orange{background:var(--orange);box-shadow:0 0 0 2px var(--orange)}
+    .timeline-item .dot.purple{background:var(--purple);box-shadow:0 0 0 2px var(--purple)}
+    .timeline-item .dot.red{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+    .timeline-item .year{
+      font-size:.75rem;font-weight:700;color:var(--accent);
+      text-transform:uppercase;letter-spacing:2px;margin-bottom:2px
+    }
+    .timeline-item h3{font-size:1.2rem;font-weight:700;margin-bottom:4px}
+    .timeline-item p{color:var(--text2);font-size:.9rem;max-width:560px;line-height:1.7}
+
+    /* ═══════ PROJECTS ═══════ */
+    #projects .section-sub{margin-bottom:40px}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+    .project-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:24px;transition:all .3s;
+      position:relative;overflow:hidden
+    }
+    .project-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      transform:scaleX(0);transform-origin:left;transition:transform .5s ease
+    }
+    .project-card:hover::before{transform:scaleX(1)}
+    .project-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 12px 48px rgba(0,0,0,.3)}
+    .project-card .card-icon{font-size:1.8rem;margin-bottom:10px}
+    .project-card h3{font-size:1.05rem;margin-bottom:6px}
+    .project-card p{color:var(--text2);font-size:.85rem;margin-bottom:12px;line-height:1.7}
+    .project-card .tags{display:flex;flex-wrap:wrap;gap:6px}
+    .project-card .tags span{
+      padding:3px 10px;border-radius:100px;
+      background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem;font-weight:500
+    }
+
+    /* ═══════ MUSIC ═══════ */
+    #music{max-width:750px}
+    #music .section-sub{margin-bottom:32px}
+    .music-player{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:28px
+    }
+    .music-player .player-info{
+      display:flex;align-items:center;gap:18px;margin-bottom:20px
+    }
+    .music-player .player-info .artwork{
+      width:72px;height:72px;border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.8rem;flex-shrink:0;position:relative;overflow:hidden
+    }
+    .music-player .player-info .artwork::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.08) 100%)
+    }
+    .music-player .player-info .meta{flex:1;min-width:0}
+    .music-player .player-info .meta .track-name{
+      font-weight:700;font-size:1.05rem;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    }
+    .music-player .player-info .meta .track-artist{color:var(--text2);font-size:.85rem}
+    .music-player .controls{
+      display:flex;align-items:center;gap:12px;margin-bottom:12px
+    }
+    .music-player .controls button{
+      background:none;border:none;color:var(--text);font-size:1.1rem;
+      cursor:pointer;width:38px;height:38px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;transition:all .2s
+    }
+    .music-player .controls button:hover{background:rgba(255,255,255,.06);color:var(--accent)}
+    .music-player .controls .play-btn{
+      background:var(--accent);color:#fff;width:46px;height:46px;font-size:1.2rem
+    }
+    .music-player .controls .play-btn:hover{background:var(--accent2);transform:scale(1.05)}
+    .music-player .progress{
+      flex:1;height:4px;background:var(--border);
+      border-radius:2px;cursor:pointer;position:relative
+    }
+    .music-player .progress .fill{
+      height:100%;width:0;
+      background:linear-gradient(90deg,var(--accent),var(--accent3));
+      border-radius:2px;transition:width .15s linear
+    }
+    .music-player .time{
+      display:flex;justify-content:space-between;
+      font-size:.7rem;color:var(--text2);
+      font-family:'JetBrains Mono',monospace;margin-bottom:16px
+    }
+    .music-player .volume-wrap{
+      display:flex;align-items:center;gap:8px;margin-bottom:16px
+    }
+    .music-player .volume-wrap i{color:var(--text2);font-size:.85rem;width:18px}
+    .music-player .volume-wrap .vol-bar{
+      flex:1;height:4px;background:var(--border);
+      border-radius:2px;cursor:pointer;position:relative
+    }
+    .music-player .volume-wrap .vol-bar .fill{height:100%;width:70%;background:var(--accent);border-radius:2px}
+    .music-player .add-track{
+      display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)
+    }
+    .music-player .add-track input{
+      flex:1;background:var(--bg2);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);
+      font-size:.85rem;outline:none;font-family:inherit;transition:border-color .2s
+    }
+    .music-player .add-track input:focus{border-color:var(--accent)}
+    .music-player .add-track input::placeholder{color:var(--text2);opacity:.6}
+    .music-player .add-track button{
+      padding:10px 20px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border:none;border-radius:var(--radius-sm);color:#fff;font-weight:600;
+      font-size:.85rem;cursor:pointer;transition:all .3s;font-family:inherit;white-space:nowrap
+    }
+    .music-player .add-track button:hover{transform:translateY(-2px);box-shadow:0 4px 20px var(--accent-glow)}
+    .playlist{margin-top:12px}
+    .playlist .playlist-item{
+      display:flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s
+    }
+    .playlist .playlist-item:hover{background:rgba(255,255,255,.04)}
+    .playlist .playlist-item.active{background:rgba(237,66,69,.1);border:1px solid rgba(237,66,69,.2)}
+    .playlist .playlist-item .pl-num{
+      width:20px;font-size:.75rem;color:var(--text2);
+      font-family:'JetBrains Mono',monospace;text-align:right
+    }
+    .playlist .playlist-item .pl-name{flex:1;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .playlist .playlist-item .pl-del{
+      background:none;border:none;color:var(--text2);cursor:pointer;
+      font-size:.8rem;padding:3px;transition:color .2s
+    }
+    .playlist .playlist-item .pl-del:hover{color:var(--red)}
+
+    /* ═══════ CONTACT ═══════ */
+    #contact{text-align:center;max-width:650px}
+    #contact .section-title{margin-bottom:12px}
+    #contact .section-sub{margin:0 auto 32px}
+    .contact-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+    .contact-links a{
+      display:flex;align-items:center;gap:7px;
+      padding:12px 24px;background:var(--surface);border:1px solid var(--border);
+      border-radius:100px;color:var(--text);text-decoration:none;
+      font-weight:500;font-size:.88rem;transition:all .3s
+    }
+    .contact-links a:hover{border-color:var(--accent);background:rgba(237,66,69,.06);transform:translateY(-3px)}
+    .contact-links a i{font-size:1.1rem;color:var(--accent)}
+
+    footer{
+      position:relative;z-index:1;text-align:center;padding:32px;
+      border-top:1px solid var(--border);color:var(--text2);font-size:.8rem
+    }
+    footer .fh{color:var(--red);display:inline-block;animation:heartbeat 1.5s ease infinite}
+    @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+
+    .bg-shapes{
+      position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden
+    }
+    .bg-shapes .shape{
+      position:absolute;border-radius:50%;filter:blur(80px);opacity:.04;animation:morph 20s ease infinite
+    }
+    .bg-shapes .shape:nth-child(1){width:500px;height:500px;background:var(--accent);top:-10%;left:-10%}
+    .bg-shapes .shape:nth-child(2){width:400px;height:400px;background:var(--accent2);bottom:-5%;right:-5%;animation-delay:-7s}
+    .bg-shapes .shape:nth-child(3){width:300px;height:300px;background:var(--accent3);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-14s}
+    @keyframes morph{
+      0%,100%{border-radius:50%;transform:rotate(0deg)scale(1)}
+      33%{border-radius:40% 60% 60% 40%/60% 40% 60% 40%;transform:rotate(120deg)scale(1.1)}
+      66%{border-radius:60% 40% 40% 60%/40% 60% 40% 60%;transform:rotate(240deg)scale(.95)}
+    }
+
+    .bars{display:flex;align-items:flex-end;gap:3px;height:22px;margin-left:auto}
+    .bars span{width:3px;background:var(--accent);border-radius:2px;animation:barWave .8s ease infinite alternate}
+    .bars.stop span{animation-play-state:paused;opacity:.3}
+    @keyframes barWave{0%{height:3px}100%{height:18px}}
+    .bars span:nth-child(1){animation-delay:0s}
+    .bars span:nth-child(2){animation-delay:.15s}
+    .bars span:nth-child(3){animation-delay:.3s}
+    .bars span:nth-child(4){animation-delay:.45s}
+
+    .publish-info{
+      background:rgba(237,66,69,.04);border:1px solid rgba(237,66,69,.15);
+      border-radius:var(--radius-sm);padding:14px 20px;margin-top:20px;
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+      font-size:.82rem;color:var(--text2);text-align:left
+    }
+    .publish-info i{color:var(--accent);font-size:1rem}
+    .publish-info code{
+      background:var(--bg2);padding:2px 8px;border-radius:4px;
+      font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);border:1px solid var(--border)
+    }
+
+    @media(max-width:920px){
+      #about,#server .server-wrap{grid-template-columns:1fr}
+    }
+    @media(max-width:768px){
+      section{padding:60px 20px}
+      nav{padding:12px 20px}
+      nav .nav-links{
+        display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;
+        background:rgba(9,9,11,.96);backdrop-filter:blur(20px);
+        padding:18px;border-bottom:1px solid var(--border)
+      }
+      nav .nav-links.open{display:flex}
+      .nav-toggle{display:flex}
+      .projects-grid{grid-template-columns:1fr}
+      #server .server-features{grid-template-columns:1fr}
+      #about .about-visual{grid-template-columns:1fr}
+      #hero .profile-card .top-row{flex-direction:column;text-align:center}
+      #hero .profile-card .name-section .status-line{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-shapes"><div class="shape"></div><div class="shape"></div><div class="shape"></div></div>
+<div id="particles"></div>
+<div id="cursor-glow"></div>
+
+<nav>
+  <div class="logo">paltak<span>.</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#hero">Profile</a>
+    <a href="#server">Server</a>
+    <a href="#about">About</a>
+    <a href="#journey">Journey</a>
+    <a href="#projects">Projects</a>
+    <a href="#music">Music</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ═══════ HERO — DISCORD PROFILE CARD ═══════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><i class="fa-solid fa-circle" style="font-size:.5rem;color:var(--online);animation:pulse 1.5s ease infinite"></i> Live Discord Presence</div>
+
+    <div class="profile-card">
+      <div class="top-row">
+        <div class="avatar-section">
+          <img id="heroAvatar" src="https://cdn.discordapp.com/avatars/1342175473245094044/bee688591c0c6ed383b25d3be09c936c.png?size=128" alt="paltak">
+          <div class="live-ring offline" id="heroRing"></div>
+        </div>
+        <div class="name-section">
+          <h1><span class="highlight">paltak</span></h1>
+          <div class="username-tag" id="heroUsername">@paltakmaster</div>
+          <div class="status-line">
+            <div class="sd offline" id="heroDot"></div>
+            <span class="sl" id="heroStatus">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="heroActivity">
+        <div class="no-activity"><i class="fa-solid fa-spinner fa-spin"></i> <span>Fetching live status...</span></div>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge-item"><i class="fa-solid fa-crown"></i> Owner of Dead Seller</span>
+        <span class="badge-item"><i class="fa-solid fa-code"></i> Developer Since 2016</span>
+        <span class="badge-item"><i class="fa-solid fa-robot"></i> 60+ Bots Built</span>
+        <span class="badge-item"><i class="fa-solid fa-users"></i> 20 Members</span>
+      </div>
+
+      <div class="btn-row">
+        <a href="#server" class="btn btn-discord"><i class="fa-brands fa-discord"></i> Join Dead Seller</a>
+        <a href="#music" class="btn btn-primary"><i class="fa-solid fa-headphones"></i> Music Player</a>
+        <a href="#about" class="btn btn-outline"><i class="fa-solid fa-user"></i> About Me</a>
+      </div>
+    </div>
+
+    <!-- Publish info -->
+    <div class="publish-info">
+      <i class="fa-solid fa-globe"></i>
+      <span>This website is ready to publish. Just upload the <code>index.html</code> file to any web host — or use your own domain.</span>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="mouse"></div>
+    <span>Scroll for more</span>
+  </div>
+</section>
+
+<!-- ═══════ SERVER ═══════ -->
+<section id="server">
+  <div class="server-wrap">
+    <div class="server-info">
+      <div class="section-label">My Discord Server</div>
+      <h2 class="section-title">Dead Seller <span class="gradient">Community</span></h2>
+      <p><strong style="color:var(--accent)">Dead Seller</strong> is my personal Discord server — a community I built from absolutely nothing. It's a space where developers, bot enthusiasts, gamers, and creators come together to share knowledge, collaborate on projects, and just have a good time.</p>
+      <p>As the <strong style="color:var(--accent)">owner & founder</strong>, I oversee every aspect: the channel structure, the custom bots, the moderation system, the events — everything. This server is a living showcase of everything I've learned building communities since 2016.</p>
+      <p>We've got <strong style="color:var(--text)">20 members</strong> and growing — an intimate, high-quality community where everyone knows each other. Whether you're here to learn coding, find beta testers, share your projects, or just chill — there's a place for you.</p>
+      <div class="server-features">
+        <div class="feat"><i class="fa-solid fa-code"></i> Dev Help & Code Reviews</div>
+        <div class="feat"><i class="fa-solid fa-robot"></i> Custom Bots & Automation</div>
+        <div class="feat"><i class="fa-solid fa-gamepad"></i> Gaming & Voice Chat</div>
+        <div class="feat"><i class="fa-solid fa-bullhorn"></i> Project Showcase</div>
+        <div class="feat"><i class="fa-solid fa-handshake"></i> Collaboration Finder</div>
+        <div class="feat"><i class="fa-solid fa-music"></i> Music & Chill Sessions</div>
+        <div class="feat"><i class="fa-solid fa-shield"></i> Fully Moderated & Safe</div>
+        <div class="feat"><i class="fa-solid fa-gift"></i> Giveaways & Events</div>
+      </div>
+      <a href="https://discord.gg/2QuuVHCmE" target="_blank" class="btn btn-discord" style="margin-top:6px"><i class="fa-brands fa-discord"></i> Join Dead Seller Now</a>
+    </div>
+    <div class="server-visual">
+      <div class="server-card">
+        <div class="s-icon"><i class="fa-brands fa-discord"></i></div>
+        <h3>Dead Seller</h3>
+        <div class="owner-badge"><i class="fa-solid fa-crown"></i> Owned by paltak</div>
+        <div class="member-count">
+          <span><strong>20</strong> Members</span>
+          <span><strong>12</strong> Online</span>
+          <span><strong>10+</strong> Channels</span>
+        </div>
+        <p style="color:var(--text2);font-size:.85rem">A community for devs, creators & gamers</p>
+        <div style="margin-top:14px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#ip-logger</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#general</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#code-help</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#showcase</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#music</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#gaming</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%">
+        <div class="server-card" style="padding:16px">
+          <i class="fa-solid fa-user-tie" style="font-size:1.6rem;color:var(--accent);margin-bottom:5px"></i>
+          <h4 style="font-size:.85rem">Owner</h4>
+          <p style="font-size:.78rem;color:var(--text2)">paltak</p>
+        </div>
+        <div class="server-card" style="padding:16px">
+          <i class="fa-solid fa-calendar" style="font-size:1.6rem;color:var(--accent);margin-bottom:5px"></i>
+          <h4 style="font-size:.85rem">Created</h4>
+          <p style="font-size:.78rem;color:var(--text2)">2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="about-text">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">From Rookie to <span class="gradient">Veteran</span></h2>
+    <p>I'm <strong>paltak</strong> — a self-taught developer who started coding in 2016 and never stopped. What began as curiosity about how Discord bots work turned into a decade-long passion for backend engineering, API design, and community building.</p>
+    <p>Over the years I've built <strong style="color:var(--text)">60+ Discord bots</strong> — moderation systems, music players, game stat trackers, automation tools, ticket systems, and full-scale bot platforms. My code runs on thousands of servers and serves over 100K users daily across the globe.</p>
+    <p>In 2026, I founded <strong style="color:var(--accent)">Dead Seller</strong> — my own Discord server where I bring together developers, creators, and gamers. I'm the owner, head admin, lead developer, and head moderator all in one. Every bot, every channel, every system — built by me.</p>
+    <p>I specialize in JavaScript/TypeScript, Node.js, Python, and the entire Discord API ecosystem. I believe in writing clean, type-safe, scalable code and building tools that make online communities genuinely better.</p>
+    <p>Beyond coding, I mentor new developers, contribute to open-source, and I'm always working on something new. The journey from writing my first <code style="background:var(--bg2);padding:1px 6px;border-radius:4px;font-size:.78rem">!ping</code> command to where I am today has been incredible — and it's far from over.</p>
+    <div class="tech-stack">
+      <span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>Python</span>
+      <span>Discord.js</span><span>Discord.py</span><span>React</span><span>Next.js</span>
+      <span>MongoDB</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span>
+      <span>Kubernetes</span><span>WebSockets</span><span>REST APIs</span><span>Lavalink</span>
+      <span>Prisma</span><span>Linux</span><span>Nginx</span><span>Git</span>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="card"><div class="icon"><i class="fa-brands fa-discord"></i></div><h4>Discord Expert</h4><p>Deep knowledge of Gateway, REST API, slash commands, modals, buttons, select menus — every feature Discord offers</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-robot"></i></div><h4>Bot Architect</h4><p>Designed bots from single-file scripts to microservice clusters with sharding, Redis caching, and 99.9% uptime</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-server"></i></div><h4>Server Owner</h4><p>Founder & owner of Dead Seller — a growing community of devs, creators, and gamers with 20+ members</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-users"></i></div><h4>Community Leader</h4><p>Built and managed communities of 100K+ users across hundreds of servers with custom moderation tooling</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h4>Security Focused</h4><p>Experienced in rate limiting, token security, permission scoping, anti-raid, and anti-spam systems</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-graduation-cap"></i></div><h4>Mentor</h4><p>Helped 100+ aspiring devs learn Discord bot development through guides, code reviews, and 1-on-1 mentoring</p></div>
+  </div>
+</section>
+
+<!-- ═══════ JOURNEY ═══════ -->
+<section id="journey">
+  <div class="section-label">My Journey</div>
+  <h2 class="section-title">The <span class="gradient">Timeline</span></h2>
+  <p class="section-sub">From writing my first line of code to owning a community — here's the full story.</p>
+  <div class="timeline">
+    <div class="timeline-item"><div class="dot orange"></div><div class="year">2016 — The Beginning</div><h3>First Steps Into Code</h3><p>Wrote my first line of JavaScript. Built a basic moderation bot that could kick, ban, and purge — it crashed every hour but it worked. I was instantly hooked. Joined my first developer Discord server and realized how much I didn't know.</p></div>
+    <div class="timeline-item"><div class="dot yellow"></div><div class="year">2017 — Growing Pains</div><h3>Learning the Ropes</h3><p>Discovered async/await, event emitters, and why you never put your bot token in source code. Rewrote my bot 3 times from scratch. Built my first command handler. Started contributing to open-source Discord libraries.</p></div>
+    <div class="timeline-item"><div class="dot"></div><div class="year">2018 — First Public Bot</div><h3>Launch of Project Nexus</h3><p>Released my first public bot — a moderation + utility bot that reached 500 servers in the first month. Learned about sharding, rate limits, and the pain of MySQL migrations at 3 AM. Made my first $50 from donations.</p></div>
+    <div class="timeline-item"><div class="dot green"></div><div class="year">2019 — Going Pro</div><h3>Freelance & Open Source</h3><p>Started taking commissions for custom Discord bots. Released my first open-source library on GitHub. Contributed to the discord.js docs. Wrote over 10K lines of production code. Built my first music bot using Lavalink.</p></div>
+    <div class="timeline-item"><div class="dot purple"></div><div class="year">2020 — Full Stack</div><h3>Beyond the Bot</h3><p>Built a web dashboard for my bots using React. Learned TypeScript, Docker, and CI/CD pipelines. My biggest bot hit 10K servers. Started exploring alternative platforms and opened up to full-stack development.</p></div>
+    <div class="timeline-item"><div class="dot green"></div><div class="year">2021 — Slash Commands</div><h3>Adapting to Change</h3><p>When Discord deprecated message content, I migrated all bots to slash commands. Rewrote command handlers, permission systems, and docs from scratch. Published a migration guide that helped 5K+ developers transition.</p></div>
+    <div class="timeline-item"><div class="dot"></div><div class="year">2022 — At Scale</div><h3>Building for Thousands</h3><p>Refactored my main bot into a microservice architecture with Redis caching, PostgreSQL sharding, and Kubernetes. Achieved 99.9% uptime across 25K+ servers. Built a real-time analytics dashboard for server insights.</p></div>
+    <div class="timeline-item"><div class="dot red"></div><div class="year">2023 — Burnout</div><h3>Taking a Step Back</h3><p>After years of non-stop development, I hit burnout. Took 3 months off, traveled, played games, and rediscovered why I love coding. Came back with cleaner code, better patterns, and fresh ideas.</p></div>
+    <div class="timeline-item"><div class="dot purple"></div><div class="year">2024 — Modern Stack</div><h3>Next Generation Tools</h3><p>Returned with a fully modernized tech stack — ESM-only TypeScript, edge functions, real-time WebSocket analytics, and a focus on DX. Launched a no-code bot builder platform for non-technical users.</p></div>
+    <div class="timeline-item"><div class="dot green"></div><div class="year">2025 — Building Home</div><h3>Creating Dead Seller</h3><p>Started planning my own Discord server. Designed the channel structure, built custom moderation bots, and laid the foundation for what would become Dead Seller — a community for devs, creators, and gamers.</p></div>
+    <div class="timeline-item"><div class="dot"></div><div class="year">2026 — Present Day</div><h3>Owner & Developer</h3><p>I'm the proud <strong style="color:var(--accent)">owner of Dead Seller</strong> — a growing community of 20 members. I code daily, mentor new developers, run my server, and work on my biggest project yet. The journey continues.</p></div>
+  </div>
+</section>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">What I've <span class="gradient">Built</span></h2>
+  <p class="section-sub">Over 60 bots, 10+ years, and countless cups of coffee — here are some highlights.</p>
+  <div class="projects-grid">
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Guardian Bot</h3><p>Advanced moderation bot with auto-moderation, logging, custom word filters, anti-raid, and a real-time web dashboard. Used in 15K+ servers worldwide.</p><div class="tags"><span>Discord.js</span><span>TypeScript</span><span>MongoDB</span><span>React</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-music"></i></div><h3>Melody Player</h3><p>High-quality music bot supporting Spotify, YouTube, SoundCloud, and local files. Queue management, equalizer, collaborative playlists, and 24/7 mode.</p><div class="tags"><span>Lavalink</span><span>Node.js</span><span>Redis</span><span>WebSocket</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-chart-line"></i></div><h3>StatsForge</h3><p>Analytics bot tracking server growth, member activity, and message trends. Generates beautiful charts with CSV export and custom report scheduling.</p><div class="tags"><span>Python</span><span>PostgreSQL</span><span>Chart.js</span><span>Docker</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-gamepad"></i></div><h3>GameTracker</h3><p>Cross-platform game stats for Valorant, CS2, League, Apex, and more. Real-time rank updates with role-based notifications and comparison tools.</p><div class="tags"><span>REST APIs</span><span>React</span><span>Redis</span><span>TypeScript</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-puzzle-piece"></i></div><h3>BotForge Platform</h3><p>No-code bot builder that lets community owners create custom Discord bots through a drag-and-drop web interface with databases and automations.</p><div class="tags"><span>Next.js</span><span>Prisma</span><span>WebSocket</span><span>Kubernetes</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-link"></i></div><h3>AuthLink</h3><p>Open-source OAuth2 library for Discord bots with automatic token refresh, state management, and middleware for Express, Next.js, and Fastify.</p><div class="tags"><span>TypeScript</span><span>Open Source</span><span>npm</span><span>Docs</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-ticket"></i></div><h3>TicketMaster</h3><p>Feature-rich ticket system with multi-category support, file uploads, transcripts, satisfaction surveys, and seamless staff assignment workflows.</p><div class="tags"><span>TypeScript</span><span>PostgreSQL</span><span>Discord.js</span><span>Docker</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-clock"></i></div><h3>AutoMod Pro</h3><p>ML-powered auto-moderation with spam detection, phishing link scanner, and behavior scoring for early detection of toxic users.</p><div class="tags"><span>Python</span><span>Redis</span><span>WebSocket</span><span>Docker</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-crown"></i></div><h3>Dead Seller Bot</h3><p>The custom bot powering my own Discord server. Member greeting, leveling, moderation, music, polls, giveaways, and server stats — all in one.</p><div class="tags"><span>Discord.js</span><span>TypeScript</span><span>MongoDB</span><span>Lavalink</span></div></div>
+  </div>
+</section>
+
+<!-- ═══════ MUSIC ═══════ -->
+<section id="music">
+  <div class="section-label">Music Player</div>
+  <h2 class="section-title">Now <span class="gradient">Playing</span></h2>
+  <p class="section-sub">Music is already loaded and ready to play. You can also paste any audio link to add your own tracks.</p>
+  <div class="music-player">
+    <div class="player-info">
+      <div class="artwork" id="artwork"><i class="fa-solid fa-headphones"></i></div>
+      <div class="meta">
+        <div class="track-name" id="trackName">Loading...</div>
+        <div class="track-artist" id="trackArtist">paltak's Player</div>
+      </div>
+      <div class="bars stop" id="audioBars"><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div class="controls">
+      <button id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
+      <button class="play-btn" id="playBtn"><i class="fa-solid fa-play" id="playIcon"></i></button>
+      <button id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
+      <div class="progress" id="progressBar"><div class="fill" id="progressFill"></div></div>
+    </div>
+    <div class="time"><span id="currentTime">0:00</span><span id="totalTime">0:00</span></div>
+    <div class="volume-wrap">
+      <i class="fa-solid fa-volume-high"></i>
+      <div class="vol-bar" id="volBar"><div class="fill" id="volFill"></div></div>
+    </div>
+    <div class="add-track">
+      <input type="text" id="trackUrl" placeholder="Paste audio URL... (.mp3, .wav, .ogg)">
+      <button id="addTrackBtn"><i class="fa-solid fa-plus"></i> Add Track</button>
+    </div>
+    <div class="playlist" id="playlist"></div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Let's <span class="gradient">Connect</span></h2>
+  <p class="section-sub">Want to join Dead Seller, commission a bot, or just talk code? I'm always around.</p>
+  <div class="contact-links">
+    <a href="https://discord.gg/2QuuVHCmE" target="_blank"><i class="fa-brands fa-discord"></i> Dead Seller</a>
+    <a href="https://discord.com/users/1342175473245094044" target="_blank"><i class="fa-brands fa-discord"></i> paltak</a>
+    <a href="https://github.com/paltak" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    <a href="mailto:paltak@dead-seller.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    <a href="#"><i class="fa-brands fa-twitter"></i> @paltak_dev</a>
+  </div>
+</section>
+
+<footer>
+  <p>Built with <span class="fh">❤</span> by <strong>paltak</strong> &nbsp;·&nbsp; Owner of <strong style="color:var(--accent)">Dead Seller</strong> &nbsp;·&nbsp; Discord Developer Since 2016</p>
+</footer>
+
+<script>
+// ───── PARTICLES ─────
+(function(){const c=document.getElementById('particles');for(let i=0;i<35;i++){const p=document.createElement('div');p.className='particle';const s=2+Math.random()*4;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(15+Math.random()*25)+'s';p.style.animationDelay=Math.random()*20+'s';p.style.background=['#ed4245','#c0392b','#e74c3c','#57f287'][Math.floor(Math.random()*4)];c.appendChild(p)}})();
+
+// ───── CURSOR ─────
+document.getElementById('cursor-glow');document.addEventListener('mousemove',e=>{document.getElementById('cursor-glow').style.left=e.clientX+'px';document.getElementById('cursor-glow').style.top=e.clientY+'px'});
+
+// ───── NAV ─────
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+
+// ───── TIMELINE ─────
+document.querySelectorAll('.timeline-item').forEach(item=>{new IntersectionObserver(e=>{e.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:.2}).observe(item)});
+
+// ══════════════════════════════════════
+// ───── LIVE DISCORD STATUS ─────
+// ══════════════════════════════════════
+
+const UID='1342175473245094044',AH='bee688591c0c6ed383b25d3be09c936c';
+const $=id=>document.getElementById(id);
+const heroAvatar=$('heroAvatar'),heroRing=$('heroRing'),heroDot=$('heroDot'),heroStatus=$('heroStatus'),heroUsername=$('heroUsername'),heroActivity=$('heroActivity');
+const colorMap={online:'#57f287',idle:'#fee75c',dnd:'#ed4245',offline:'#80848e'};
+
+function setStatus(s){
+  const st=s||'offline';
+  heroRing.className='live-ring '+st;
+  heroDot.className='sd '+st;
+  heroStatus.textContent=st;
+  heroStatus.style.color=colorMap[st]||colorMap.offline;
+}
+
+function setActivity(d){
+  if(!d||!d.activities||d.activities.length===0){
+    heroActivity.innerHTML=`<div class="no-activity"><i class="fa-solid fa-moon"></i><span>No current activity</span></div>`;
+    return;
+  }
+  const a=d.activities[0],name=a.name||'Unknown',details=a.details||'',state=a.state||'',app=a.application_id,ts=a.timestamps,as=a.assets;
+  let icon='<i class="fa-solid fa-gamepad"></i>';
+  if(as&&as.large_image){
+    const src=as.large_image.startsWith('mp:')?'https://media.discordapp.net/'+as.large_image.replace('mp:',''):'https://cdn.discordapp.com/app-assets/'+app+'/'+as.large_image+'.png';
+    icon='<img src="'+src+'" alt="">';
+  }else{
+    const icons={'Spotify':'fa-brands fa-spotify','Visual Studio Code':'fa-solid fa-code','YouTube':'fa-brands fa-youtube','GitHub':'fa-brands fa-github','Discord':'fa-brands fa-discord','Figma':'fa-brands fa-figma'};
+    for(const[k,v]of Object.entries(icons)){if(name.toLowerCase().includes(k.toLowerCase())){icon='<i class="'+v+'"></i>';break}}
+  }
+  let elapsed='';
+  if(ts&&ts.start){const st=ts.start;elapsed='<div class="act-time" data-start="'+st+'">0:00 elapsed</div>'}
+  heroActivity.innerHTML=`<div class="activity-row"><div class="ai">${icon}</div><div class="act-info"><div class="act-name">${name}${details?' — '+details:''}</div>${state?'<div class="act-detail">'+state+'</div>':''}${elapsed}</div></div>`;
+  if(ts&&ts.start){const el=heroActivity.querySelector('.act-time');if(el){const st=ts.start;setInterval(()=>{const e=Math.floor((Date.now()-st)/1000),m=Math.floor(e/60),s=e%60;el.textContent=m+':'+(s<10?'0':'')+s+' elapsed'},1000)}}
+}
+
+// Fetch initial + connect WebSocket
+async function initLanyard(){
+  try{
+    const r=await fetch('https://api.lanyard.rest/v1/users/'+UID);
+    if(r.ok){const j=await r.json();if(j.success&&j.data){const d=j.data;setStatus(d.discord_status);setActivity(d);if(d.discord_user)heroUsername.textContent='@'+(d.discord_user.username||'paltakmaster')}}
+  }catch{}
+  // WebSocket
+  let ws=null;
+  function connect(){
+    if(ws)try{ws.close()}catch{}
+    try{
+      ws=new WebSocket('wss://api.lanyard.rest/socket');
+      ws.onopen=()=>ws.send(JSON.stringify({op:2,d:{subscribe_to_id:UID}}));
+      ws.onmessage=e=>{
+        try{
+          const m=JSON.parse(e.data);
+          if(m.op===1){ws.send(JSON.stringify({op:3}));return}
+          if(m.t==='INIT_STATE'||m.t==='PRESENCE_UPDATE'){const d=m.d;if(d){setStatus(d.discord_status);setActivity(d);if(d.discord_user)heroUsername.textContent='@'+(d.discord_user.username||'paltakmaster')}}
+        }catch{}
+      };
+      ws.onclose=()=>setTimeout(connect,5000);
+      ws.onerror=()=>{try{ws.close()}catch{}}
+    }catch{setTimeout(connect,10000)}
+  }
+  connect();
+}
+initLanyard();
+setStatus('offline');
+
+// ══════════════════════════════════════
+// ───── MUSIC PLAYER ─────
+// ══════════════════════════════════════
+
+const audio=new Audio();let pl=[],ct=-1,ip=false;
+const playBtn=$('playBtn'),playIcon=$('playIcon'),prevBtn=$('prevBtn'),nextBtn=$('nextBtn'),progressBar=$('progressBar'),progressFill=$('progressFill'),currentTimeEl=$('currentTime'),totalTimeEl=$('totalTime'),trackNameEl=$('trackName'),trackArtistEl=$('trackArtist'),artworkEl=$('artwork'),trackUrl=$('trackUrl'),addBtn=$('addTrackBtn'),playlistEl=$('playlist'),volBar=$('volBar'),volFill=$('volFill'),audioBars=$('audioBars');
+let isSk=false,isVSk=false;
+function fmt(s){if(isNaN(s)||!isFinite(s))return'0:00';const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec}
+function load(i){
+  if(i<0||i>=pl.length)return;
+  ct=i;const t=pl[i];audio.src=t.url;
+  trackNameEl.textContent=t.name;trackArtistEl.textContent=t.artist||"paltak's Player";
+  artworkEl.innerHTML='<i class="fa-solid fa-music"></i>';renderPl();audio.load();
+  if(ip)audio.play().catch(()=>{ip=false;upd()})
+}
+function play(i){if(i<0||i>=pl.length)return;ip=true;load(i);upd()}
+function upd(){playIcon.className=ip?'fa-solid fa-pause':'fa-solid fa-play';audioBars.classList.toggle('stop',!ip)}
+function renderPl(){
+  playlistEl.innerHTML='';
+  pl.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='playlist-item'+(i===ct?' active':'');
+    d.innerHTML='<span class="pl-num">'+(i+1)+'</span><span class="pl-name">'+t.name+'</span><button class="pl-del" data-index="'+i+'"><i class="fa-solid fa-xmark"></i></button>';
+    d.addEventListener('click',e=>{if(e.target.closest('.pl-del'))return;play(i)});
+    d.querySelector('.pl-del').addEventListener('click',e=>{
+      e.stopPropagation();pl.splice(i,1);
+      if(i===ct){if(pl.length>0){const n=Math.min(i,pl.length-1);ct=-1;load(n)}else{audio.pause();audio.src='';ct=-1;ip=false;upd();trackNameEl.textContent='No track loaded';trackArtistEl.textContent='Add a link below to play';artworkEl.innerHTML='<i class="fa-solid fa-headphones"></i>';audioBars.classList.add('stop')}}else if(i<ct)ct--;
+      renderPl()
+    });
+    playlistEl.appendChild(d)
+  })
+}
+function addF(){
+  const u=trackUrl.value.trim();if(!u)return;
+  let n=u.split('/').pop().split('?')[0]||'Track '+(pl.length+1);
+  if(n.includes('.'))n=n.replace(/\.[^.]+$/,'');
+  pl.push({url:u,name:n,artist:'Added by you'});trackUrl.value='';renderPl();
+  if(ct===-1){ip=true;load(0);upd()}
+}
+addBtn.addEventListener('click',addF);
+trackUrl.addEventListener('keydown',e=>{if(e.key==='Enter')addF()});
+playBtn.addEventListener('click',()=>{
+  if(pl.length===0)return;
+  if(ct===-1){ip=true;load(0);upd();return}
+  if(ip){audio.pause();ip=false}else{audio.play().catch(()=>{});ip=true}
+  upd()
+});
+prevBtn.addEventListener('click',()=>{
+  if(pl.length===0)return;
+  if(audio.currentTime>3){audio.currentTime=0;return}
+  const i=ct-1;if(i>=0){ip=true;load(i);upd()}else{ip=true;load(pl.length-1);upd()}
+});
+nextBtn.addEventListener('click',()=>{
+  if(pl.length===0)return;
+  const i=ct+1;if(i<pl.length){ip=true;load(i);upd()}else{ip=true;load(0);upd()}
+});
+audio.addEventListener('timeupdate',()=>{if(isSk)return;const p=audio.duration?(audio.currentTime/audio.duration*100):0;progressFill.style.width=p+'%';currentTimeEl.textContent=fmt(audio.currentTime);totalTimeEl.textContent=fmt(audio.duration)});
+audio.addEventListener('loadedmetadata',()=>{totalTimeEl.textContent=fmt(audio.duration)});
+audio.addEventListener('ended',()=>{nextBtn.click()});
+audio.addEventListener('play',()=>{ip=true;upd()});
+audio.addEventListener('pause',()=>{ip=false;upd()});
+progressBar.addEventListener('mousedown',e=>{isSk=true;seekP(e)});
+document.addEventListener('mousemove',e=>{if(isSk)seekP(e)});
+document.addEventListener('mouseup',()=>{isSk=false});
+function seekP(e){const r=progressBar.getBoundingClientRect(),p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));if(audio.duration){audio.currentTime=p*audio.duration;progressFill.style.width=(p*100)+'%';currentTimeEl.textContent=fmt(audio.currentTime)}}
+volBar.addEventListener('mousedown',e=>{isVSk=true;seekV(e)});
+document.addEventListener('mousemove',e=>{if(isVSk)seekV(e)});
+document.addEventListener('mouseup',()=>{isVSk=false});
+function seekV(e){const r=volBar.getBoundingClientRect(),p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));audio.volume=p;volFill.style.width=(p*100)+'%'}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(e.code==='Space'){e.preventDefault();playBtn.click()}if(e.code==='ArrowRight'){audio.currentTime=Math.min(audio.currentTime+5,audio.duration||0)}if(e.code==='ArrowLeft'){audio.currentTime=Math.max(audio.currentTime-5,0)}if(e.code==='ArrowUp'){audio.volume=Math.min(audio.volume+.1,1);volFill.style.width=(audio.volume*100)+'%'}if(e.code==='ArrowDown'){audio.volume=Math.max(audio.volume-.1,0);volFill.style.width=(audio.volume*100)+'%'}});
+
+// Pre-loaded tracks
+(function(){pl.push({url:'https://files.catbox.moe/tnltph.m4a',name:'Люби меня',artist:'Miyagi & Andy Panda'},{url:'https://files.catbox.moe/0u3kvt.m4a',name:'Swimming Pools (Drank)',artist:'Kendrick Lamar'});renderPl();ct=-1;ip=true;load(0);audio.play().then(upd).catch(()=>{ip=false;upd();trackNameEl.textContent='Click Play to start'})})();
+
+console.log('%c paltak %c Owner of Dead Seller ','background:#ed4245;color:#fff;font-size:16px;font-weight:900;padding:4px 8px;border-radius:4px 0 0 4px','background:#1a1a2e;color:#ed4245;font-size:16px;font-weight:700;padding:4px 8px;border-radius:0 4px 4px 0');
+console.log('%c Discord Developer Since 2016 • discord.gg/2QuuVHCmE','color:#a08080;font-size:13px');
+</script>
+</body>
+</html>

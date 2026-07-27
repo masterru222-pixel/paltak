@@ -1,0 +1,10 @@
+﻿node_modules/
+package.json
+package-lock.json
+deploy.js
+test.js
+tunnel.js
+wrangler.toml
+track1.m4a
+track2.m4a
+*.log

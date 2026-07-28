@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>paltak — Owner of Dead Seller | Discord Developer Since 2016</title>
+  <title>Paltak — Owner of Dead Seller | Discord Developer Since 2016</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -487,18 +487,6 @@
     .bars span:nth-child(3){animation-delay:.3s}
     .bars span:nth-child(4){animation-delay:.45s}
 
-    .publish-info{
-      background:rgba(237,66,69,.04);border:1px solid rgba(237,66,69,.15);
-      border-radius:var(--radius-sm);padding:14px 20px;margin-top:20px;
-      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-      font-size:.82rem;color:var(--text2);text-align:left
-    }
-    .publish-info i{color:var(--accent);font-size:1rem}
-    .publish-info code{
-      background:var(--bg2);padding:2px 8px;border-radius:4px;
-      font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);border:1px solid var(--border)
-    }
-
     @media(max-width:920px){
       #about,#server .server-wrap{grid-template-columns:1fr}
     }
@@ -579,11 +567,6 @@
       </div>
     </div>
 
-    <!-- Publish info -->
-    <div class="publish-info">
-      <i class="fa-solid fa-globe"></i>
-      <span>This website is ready to publish. Just upload the <code>index.html</code> file to any web host — or use your own domain.</span>
-    </div>
   </div>
 
   <div class="scroll-indicator">
@@ -610,6 +593,8 @@
         <div class="feat"><i class="fa-solid fa-music"></i> Music & Chill Sessions</div>
         <div class="feat"><i class="fa-solid fa-shield"></i> Fully Moderated & Safe</div>
         <div class="feat"><i class="fa-solid fa-gift"></i> Giveaways & Events</div>
+        <div class="feat"><i class="fa-solid fa-skull"></i> Security Research & RE</div>
+        <div class="feat"><i class="fa-solid fa-bolt"></i> Stress Testing Lab</div>
       </div>
       <a href="https://discord.gg/2QuuVHCmE" target="_blank" class="btn btn-discord" style="margin-top:6px"><i class="fa-brands fa-discord"></i> Join Dead Seller Now</a>
     </div>
@@ -631,6 +616,8 @@
           <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#showcase</span>
           <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#music</span>
           <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#gaming</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#reverse-eng</span>
+          <span style="padding:3px 10px;border-radius:100px;background:rgba(237,66,69,.07);color:var(--accent);font-size:.7rem">#ddos-lab</span>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%">
@@ -658,13 +645,23 @@
     <p>Over the years I've built <strong style="color:var(--text)">60+ Discord bots</strong> — moderation systems, music players, game stat trackers, automation tools, ticket systems, and full-scale bot platforms. My code runs on thousands of servers and serves over 100K users daily across the globe.</p>
     <p>In 2026, I founded <strong style="color:var(--accent)">Dead Seller</strong> — my own Discord server where I bring together developers, creators, and gamers. I'm the owner, head admin, lead developer, and head moderator all in one. Every bot, every channel, every system — built by me.</p>
     <p>I specialize in JavaScript/TypeScript, Node.js, Python, and the entire Discord API ecosystem. I believe in writing clean, type-safe, scalable code and building tools that make online communities genuinely better.</p>
+    <p>On the systems level, I'm deeply into <strong style="color:var(--accent)">modern C++</strong> (C++20/23) — lock-free concurrency, custom networking stacks with Boost.Asio, gRPC microservices, and high-performance game server engines. I've built real-time systems that handle 10K+ concurrent connections with deterministic latency, and I write cross-platform C++ using CMake with exhaustive CI/CD pipelines. My low-level work includes memory-mapped I/O, SIMD optimizations, and custom allocators — because sometimes you need that extra 5% perf.</p>
+    <p>I'm also experienced in <strong style="color:var(--accent)">C#</strong> and the .NET ecosystem — building everything from Windows desktop applications with WPF to cross-platform services running on .NET. My C# work spans Discord bot development, game server tooling, and high-throughput REST APIs.</p>
+    <p>On the security side, I've spent years doing <strong style="color:var(--accent)">reverse engineering</strong> — tearing apart binaries with IDA Pro, Ghidra, x64dbg, and dnSpy. I reverse Windows PE files, Linux ELFs, and game memory structures. I've written loaders, injectors, and custom unpackers. I understand PE/ELF headers, import tables, section manipulation, and anti-debugging techniques inside out. My low-level knowledge extends to kernel-mode research, syscall hooking, and analysis of obfuscated malware samples.</p>
+    <p>I've built and tested <strong style="color:var(--accent)">network stress tools</strong> for security research — layer 7 HTTP flooders, SYN flooders, UDP amplification, and custom protocol fuzzers. These are strictly for authorized penetration testing and security education. Understanding how DDoS attacks work is essential for building systems that withstand them. I've helped multiple small services harden their infrastructure against common attack vectors.</p>
     <p>Beyond coding, I mentor new developers, contribute to open-source, and I'm always working on something new. The journey from writing my first <code style="background:var(--bg2);padding:1px 6px;border-radius:4px;font-size:.78rem">!ping</code> command to where I am today has been incredible — and it's far from over.</p>
     <div class="tech-stack">
-      <span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>Python</span>
+      <span>JavaScript</span><span>TypeScript</span><span>C++</span><span>C#</span><span>.NET</span><span>Node.js</span><span>Python</span>
+      <span>C++20</span><span>STL</span><span>Boost</span><span>CMake</span><span>Qt</span>
+      <span>C#</span><span>WPF</span><span>.NET Core</span><span>ASP.NET</span>
       <span>Discord.js</span><span>Discord.py</span><span>React</span><span>Next.js</span>
       <span>MongoDB</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span>
-      <span>Kubernetes</span><span>WebSockets</span><span>REST APIs</span><span>Lavalink</span>
-      <span>Prisma</span><span>Linux</span><span>Nginx</span><span>Git</span>
+      <span>Kubernetes</span><span>WebSockets</span><span>gRPC</span><span>REST APIs</span>
+      <span>Lavalink</span><span>Prisma</span><span>Protobuf</span>
+      <span>Reverse Engineering</span><span>IDA Pro</span><span>Ghidra</span><span>x64dbg</span><span>dnSpy</span>
+      <span>x86/x64 ASM</span><span>WinAPI</span><span>PE/ELF</span><span>Kernel</span>
+      <span>Network Security</span><span>Pen Testing</span><span>Wireshark</span><span>Nmap</span>
+      <span>Linux</span><span>Nginx</span><span>Git</span><span>CI/CD</span>
     </div>
   </div>
   <div class="about-visual">
@@ -672,7 +669,10 @@
     <div class="card"><div class="icon"><i class="fa-solid fa-robot"></i></div><h4>Bot Architect</h4><p>Designed bots from single-file scripts to microservice clusters with sharding, Redis caching, and 99.9% uptime</p></div>
     <div class="card"><div class="icon"><i class="fa-solid fa-server"></i></div><h4>Server Owner</h4><p>Founder & owner of Dead Seller — a growing community of devs, creators, and gamers with 20+ members</p></div>
     <div class="card"><div class="icon"><i class="fa-solid fa-users"></i></div><h4>Community Leader</h4><p>Built and managed communities of 100K+ users across hundreds of servers with custom moderation tooling</p></div>
-    <div class="card"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h4>Security Focused</h4><p>Experienced in rate limiting, token security, permission scoping, anti-raid, and anti-spam systems</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-microchip"></i></div><h4>C++ Systems</h4><p>Modern C++20/23 with STL, Boost, Qt, lock-free concurrency, custom networking, and low-latency engine development</p></div>
+    <div class="card"><div class="icon"><i class="fa-brands fa-microsoft"></i></div><h4>C# & .NET</h4><p>WPF desktop apps, ASP.NET APIs, Discord bot tooling, and cross-platform .NET services with high throughput</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-microscope"></i></div><h4>Reverse Engineering</h4><p>IDA Pro, Ghidra, x64dbg, dnSpy — PE/ELF analysis, anti-debugging bypass, unpacking, and malware reverse</p></div>
+    <div class="card"><div class="icon"><i class="fa-solid fa-skull"></i></div><h4>Security Research</h4><p>Network stress testing, DDoS mitigation, HTTP/SYN/UDP flood analysis, protocol fuzzing, and infrastructure hardening</p></div>
     <div class="card"><div class="icon"><i class="fa-solid fa-graduation-cap"></i></div><h4>Mentor</h4><p>Helped 100+ aspiring devs learn Discord bot development through guides, code reviews, and 1-on-1 mentoring</p></div>
   </div>
 </section>
@@ -687,13 +687,13 @@
     <div class="timeline-item"><div class="dot yellow"></div><div class="year">2017 — Growing Pains</div><h3>Learning the Ropes</h3><p>Discovered async/await, event emitters, and why you never put your bot token in source code. Rewrote my bot 3 times from scratch. Built my first command handler. Started contributing to open-source Discord libraries.</p></div>
     <div class="timeline-item"><div class="dot"></div><div class="year">2018 — First Public Bot</div><h3>Launch of Project Nexus</h3><p>Released my first public bot — a moderation + utility bot that reached 500 servers in the first month. Learned about sharding, rate limits, and the pain of MySQL migrations at 3 AM. Made my first $50 from donations.</p></div>
     <div class="timeline-item"><div class="dot green"></div><div class="year">2019 — Going Pro</div><h3>Freelance & Open Source</h3><p>Started taking commissions for custom Discord bots. Released my first open-source library on GitHub. Contributed to the discord.js docs. Wrote over 10K lines of production code. Built my first music bot using Lavalink.</p></div>
-    <div class="timeline-item"><div class="dot purple"></div><div class="year">2020 — Full Stack</div><h3>Beyond the Bot</h3><p>Built a web dashboard for my bots using React. Learned TypeScript, Docker, and CI/CD pipelines. My biggest bot hit 10K servers. Started exploring alternative platforms and opened up to full-stack development.</p></div>
+    <div class="timeline-item"><div class="dot purple"></div><div class="year">2020 — Full Stack</div><h3>Beyond the Bot</h3><p>Built a web dashboard for my bots using React. Learned TypeScript, Docker, and CI/CD pipelines. My biggest bot hit 10K servers. Started exploring alternative platforms and opened up to full-stack development. Also began dabbling in C++ — wrote a simple Discord bot using the Sleepy Discord library just to understand how the Gateway API works at the packet level.</p></div>
     <div class="timeline-item"><div class="dot green"></div><div class="year">2021 — Slash Commands</div><h3>Adapting to Change</h3><p>When Discord deprecated message content, I migrated all bots to slash commands. Rewrote command handlers, permission systems, and docs from scratch. Published a migration guide that helped 5K+ developers transition.</p></div>
     <div class="timeline-item"><div class="dot"></div><div class="year">2022 — At Scale</div><h3>Building for Thousands</h3><p>Refactored my main bot into a microservice architecture with Redis caching, PostgreSQL sharding, and Kubernetes. Achieved 99.9% uptime across 25K+ servers. Built a real-time analytics dashboard for server insights.</p></div>
     <div class="timeline-item"><div class="dot red"></div><div class="year">2023 — Burnout</div><h3>Taking a Step Back</h3><p>After years of non-stop development, I hit burnout. Took 3 months off, traveled, played games, and rediscovered why I love coding. Came back with cleaner code, better patterns, and fresh ideas.</p></div>
-    <div class="timeline-item"><div class="dot purple"></div><div class="year">2024 — Modern Stack</div><h3>Next Generation Tools</h3><p>Returned with a fully modernized tech stack — ESM-only TypeScript, edge functions, real-time WebSocket analytics, and a focus on DX. Launched a no-code bot builder platform for non-technical users.</p></div>
-    <div class="timeline-item"><div class="dot green"></div><div class="year">2025 — Building Home</div><h3>Creating Dead Seller</h3><p>Started planning my own Discord server. Designed the channel structure, built custom moderation bots, and laid the foundation for what would become Dead Seller — a community for devs, creators, and gamers.</p></div>
-    <div class="timeline-item"><div class="dot"></div><div class="year">2026 — Present Day</div><h3>Owner & Developer</h3><p>I'm the proud <strong style="color:var(--accent)">owner of Dead Seller</strong> — a growing community of 20 members. I code daily, mentor new developers, run my server, and work on my biggest project yet. The journey continues.</p></div>
+    <div class="timeline-item"><div class="dot purple"></div><div class="year">2024 — Modern Stack</div><h3>Next Generation Tools</h3><p>Returned with a fully modernized tech stack — ESM-only TypeScript, edge functions, real-time WebSocket analytics, and a focus on DX. Launched a no-code bot builder platform for non-technical users. Deepened my C# and .NET skills, building WPF tooling and ASP.NET backends. Started taking reverse engineering seriously — binary analysis, IDA Pro scripting, and CTF reversing challenges.</p></div>
+    <div class="timeline-item"><div class="dot green"></div><div class="year">2025 — Building Home</div><h3>Creating Dead Seller</h3><p>Started planning my own Discord server. Designed the channel structure, built custom moderation bots, and laid the foundation for what would become Dead Seller — a community for devs, creators, and gamers. On the C++ side, I built Velox Engine — a high-performance game server framework using C++20, Boost.Asio, and lock-free queues — which I now use for internal tooling and real-time data pipelines.</p></div>
+    <div class="timeline-item"><div class="dot"></div><div class="year">2026 — Present Day</div><h3>Owner & Developer</h3><p>I'm the proud <strong style="color:var(--accent)">owner of Dead Seller</strong> — a growing community of 20 members. I code daily, mentor new developers, run my server, reverse engineer binaries for fun, and build security research tooling. C#, C++, RE, and DDoS mitigation — the journey continues.</p></div>
   </div>
 </section>
 
@@ -712,6 +712,9 @@
     <div class="project-card"><div class="card-icon"><i class="fa-solid fa-ticket"></i></div><h3>TicketMaster</h3><p>Feature-rich ticket system with multi-category support, file uploads, transcripts, satisfaction surveys, and seamless staff assignment workflows.</p><div class="tags"><span>TypeScript</span><span>PostgreSQL</span><span>Discord.js</span><span>Docker</span></div></div>
     <div class="project-card"><div class="card-icon"><i class="fa-solid fa-clock"></i></div><h3>AutoMod Pro</h3><p>ML-powered auto-moderation with spam detection, phishing link scanner, and behavior scoring for early detection of toxic users.</p><div class="tags"><span>Python</span><span>Redis</span><span>WebSocket</span><span>Docker</span></div></div>
     <div class="project-card"><div class="card-icon"><i class="fa-solid fa-crown"></i></div><h3>Dead Seller Bot</h3><p>The custom bot powering my own Discord server. Member greeting, leveling, moderation, music, polls, giveaways, and server stats — all in one.</p><div class="tags"><span>Discord.js</span><span>TypeScript</span><span>MongoDB</span><span>Lavalink</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-c"></i></div><h3>Velox Engine</h3><p>High-performance C++20 game server engine with an entity-component system, lock-free concurrency, custom networking stack with UDP + TCP fallback, and hot-reloadable Lua scripting. Handles 10K+ concurrent connections with sub-millisecond latency. Built with modern C++, Boost.Asio, and Protocol Buffers.</p><div class="tags"><span>C++20</span><span>Boost</span><span>Protobuf</span><span>CMake</span><span>Qt</span><span>gRPC</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-bolt"></i></div><h3>Storm Stresser</h3><p>Layer 7 HTTP/HTTPS stress testing tool with proxy rotation, CAPTCHA bypass, multi-threaded flood engines, and real-time metrics. Supports HTTP/2 multiplexing, Cloudflare bypass techniques, and custom payload injection. Built purely for authorized penetration testing and security research — includes rate limiting safeguards and IP whitelisting.</p><div class="tags"><span>C#</span><span>.NET</span><span>WinAPI</span><span>HTTP/2</span><span>Sockets</span></div></div>
+    <div class="project-card"><div class="card-icon"><i class="fa-solid fa-bug"></i></div><h3>Binary RE Toolkit</h3><p>Collection of Python + C# reverse engineering utilities — PE/ELF parser, import reconstructor, anti-debugging bypass framework, automated unpacker for UPX/MPRESS, x86/x64 instruction decoder, and a IDA Pro plugin for automated function recovery. Used for CTF challenges and malware analysis research.</p><div class="tags"><span>Python</span><span>C#</span><span>IDA Pro</span><span>Ghidra</span><span>x86 ASM</span></div></div>
   </div>
 </section>
 
@@ -920,8 +923,9 @@ document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.
 // Pre-loaded tracks
 (function(){pl.push({url:'https://files.catbox.moe/tnltph.m4a',name:'Люби меня',artist:'Miyagi & Andy Panda'},{url:'https://files.catbox.moe/0u3kvt.m4a',name:'Swimming Pools (Drank)',artist:'Kendrick Lamar'});renderPl();ct=-1;ip=true;load(0);let ah=document.createElement('div');ah.id='autoplay-hint';ah.innerHTML='<i class="fa-solid fa-music"></i> Tap anywhere to play';Object.assign(ah.style,{position:'fixed',bottom:'90px',left:'50%',transform:'translateX(-50%)',background:'rgba(237,66,69,.9)',color:'#fff',padding:'10px 22px',borderRadius:'50px',fontSize:'13px',fontWeight:600,zIndex:9999,boxShadow:'0 4px 20px rgba(237,66,69,.4)',cursor:'pointer',transition:'opacity .6s',fontFamily:"'Inter',sans-serif"});document.body.appendChild(ah);(function(){let s=document.createElement('style');s.textContent='@keyframes bnce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}#autoplay-hint{animation:bnce 2s infinite}#autoplay-hint.fade{opacity:0;pointer-events:none}';document.head.appendChild(s)})();audio.play().then(()=>{upd();ah.classList.add('fade');setTimeout(()=>ah.remove(),600)}).catch(()=>{ip=false;upd();let f=()=>{audio.play().then(()=>{ip=true;upd();ah.classList.add('fade');setTimeout(()=>{ah.remove();document.removeEventListener('click',f);document.removeEventListener('touchstart',f)},600)}).catch(()=>{})};document.addEventListener('click',f);document.addEventListener('touchstart',f)})})();
 
-console.log('%c paltak %c Owner of Dead Seller ','background:#ed4245;color:#fff;font-size:16px;font-weight:900;padding:4px 8px;border-radius:4px 0 0 4px','background:#1a1a2e;color:#ed4245;font-size:16px;font-weight:700;padding:4px 8px;border-radius:0 4px 4px 0');
-console.log('%c Discord Developer Since 2016 • discord.gg/2QuuVHCmE','color:#a08080;font-size:13px');
+console.log('%c Paltak %c Owner of Dead Seller ','background:#ed4245;color:#fff;font-size:16px;font-weight:900;padding:4px 8px;border-radius:4px 0 0 4px','background:#1a1a2e;color:#ed4245;font-size:16px;font-weight:700;padding:4px 8px;border-radius:0 4px 4px 0');
+console.log('%c C++20 • C# • .NET • Reverse Engineering • Security Research','color:#a08080;font-size:13px');
+console.log('%c discord.gg/2QuuVHCmE','color:#ed4245;font-size:13px;font-weight:700');
 </script>
 </body>
 </html>
